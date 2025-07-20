@@ -1,7 +1,18 @@
+import 'package:aarti_app/views/rate%20us/rate_us_screen.dart';
+import 'package:aarti_app/views/share/share_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../components/build image card/build_image_card.dart';
+import '../../components/lang 2/lang_scr.dart';
+import '../../components/tofu2/tofu2.dart';
+import '../../components/tofu3/tofu3.dart';
 import '../../main.dart';
+import '../../widgets/build drawer item/build_drawer_item.dart';
+import '../aarti/aarti_screen.dart';
+import '../downloads/downloads_screen.dart';
+import '../home/home_screen.dart';
+import '../wallpaper/wallpaper_screen.dart';
 
 class GetStartedScreen extends StatefulWidget {
   const GetStartedScreen({super.key});
@@ -42,14 +53,14 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                   child: ClipOval(
                     child: CachedNetworkImage(
                       imageUrl:
-                      'https://assets.ganeshaspeaks.com/wp-content/uploads/2018/03/hanuman-jayanti-2018-600.webp',
+                          'https://assets.ganeshaspeaks.com/wp-content/uploads/2018/03/hanuman-jayanti-2018-600.webp',
                       fit: BoxFit.cover,
                       width: mq.height * .16, // diameter
                       height: mq.height * .16,
                       placeholder: (context, url) =>
-                      const CircularProgressIndicator(),
+                          const CircularProgressIndicator(),
                       errorWidget: (context, url, error) =>
-                      const Icon(Icons.error),
+                          const Icon(Icons.error),
                     ),
                   ),
                 ),
@@ -98,6 +109,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                   Navigator.pop(context);
                 },
               ),
+
               Padding(
                 padding: const EdgeInsets.only(
                   left: 16.0,
@@ -139,6 +151,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
         ),
         body: Container(
           decoration: const BoxDecoration(
+            color: Colors.red,
             gradient: LinearGradient(
               colors: [Color(0xFFF9F0E1), Color(0xFFFCECDD)],
               begin: Alignment.topCenter,
@@ -162,16 +175,11 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
 
               // Get Started Card
               Positioned(
-                top: mq.height * 0.12,
+                top: mq.height * 0.09,
                 left: mq.width * 0.08,
-                child: SizedBox(
-                  width: mq.width * 0.35,
-                  height: mq.height * 0.18,
-                  child: SelectionCard(
-                    onTap: () => Get.to(() => HomeScreen()),
-                    cardIcon: Icons.waving_hand,
-                    cardTitle: "Get Started",
-                  ),
+                child: buildImageCard(
+                  assetPath: 'assets/start.png',
+                  onTap: () => Get.to(() => HomeScreen()),
                 ),
               ),
 
@@ -179,14 +187,9 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
               Positioned(
                 top: mq.height * 0.12,
                 right: mq.width * 0.08,
-                child: SizedBox(
-                  width: mq.width * 0.35,
-                  height: mq.height * 0.18,
-                  child: SelectionCard(
-                    onTap: () => Get.to(() => ShareScreen()),
-                    cardIcon: Icons.privacy_tip,
-                    cardTitle: "Privacy",
-                  ),
+                child: buildImageCard(
+                  assetPath: 'assets/privacy.png',
+                  onTap: () => Get.to(() => TofuScreen2()),
                 ),
               ),
 
@@ -194,29 +197,19 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
               Positioned(
                 top: mq.height * 0.32,
                 left: mq.width * 0.08,
-                child: SizedBox(
-                  width: mq.width * 0.35,
-                  height: mq.height * 0.18,
-                  child: SelectionCard(
-                    onTap: () => Get.to(() => ShareScreen()),
-                    cardIcon: Icons.share,
-                    cardTitle: "Share",
-                  ),
+                child: buildImageCard(
+                  assetPath: 'assets/share.png',
+                  onTap: () => Get.to(() => ShareScreen()),
                 ),
               ),
 
               // Rate Us Card
               Positioned(
-                top: mq.height * 0.32,
+                top: mq.height * 0.35,
                 right: mq.width * 0.08,
-                child: SizedBox(
-                  width: mq.width * 0.35,
-                  height: mq.height * 0.18,
-                  child: SelectionCard(
-                    onTap: () => Get.to(() => RateUsScreen()),
-                    cardIcon: Icons.star,
-                    cardTitle: "Rate Us",
-                  ),
+                child: buildImageCard(
+                  assetPath: 'assets/rate.png',
+                  onTap: () => Get.to(() => RateUsScreen()),
                 ),
               ),
 
@@ -231,17 +224,9 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                     child: SizedBox(
                       width: double.infinity,
                       height: mq.height * 0.24,
-                      child: Image.network(
-                        "https://placehold.co/600x400/F9F0E1/000000?text=Bottom+Image",
+                      child: Image.asset(
+                        "assets/bottom.png",
                         fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Container(
-                            color: Colors.grey[300],
-                            child: const Center(
-                              child: Text('Bottom Image Placeholder'),
-                            ),
-                          );
-                        },
                       ),
                     ),
                   ),
