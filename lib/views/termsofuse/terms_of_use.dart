@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../components/tofu/tofu_screen.dart';
 
 class TermsOfUseScreen extends StatefulWidget {
   const TermsOfUseScreen({super.key});

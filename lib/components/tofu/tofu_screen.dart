@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import '../../views/permissions/permissions.dart';
+import '../../widgets/build policy item/build_policy_item.dart';
 import '../CustomNxtButton/custom_next_button.dart';
-import '../view/Permissions/permissions_screen.dart';
-import 'build_policy_item.dart';
-import 'custom_next_button.dart';
 
 class TofuScreen extends StatelessWidget {
   const TofuScreen({super.key});

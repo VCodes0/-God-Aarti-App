@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../termsofuse/terms_of_use.dart';
+
 class OnboardThird extends StatelessWidget {
   const OnboardThird({super.key});
 
