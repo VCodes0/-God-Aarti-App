@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../components/CustomNxtButton/custom_next_button.dart';
 import '../../widgets/buildPermissionTile/build_permission_tile.dart';
+import '../get started/get_started.dart';
 
 
 class PermissionsScreen extends StatefulWidget {

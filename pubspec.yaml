@@ -13,10 +13,38 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # iOS-style icons for the app
   cupertino_icons: ^1.0.8
-  get: ^4.7.2
+
+  # Google Fonts integration for custom typography
   google_fonts: ^6.2.1
+
+  # Dio is a powerful HTTP client for API calls
+  dio: ^5.8.0+1
+
+  # Provider for simple and scalable state management
+  provider: ^6.1.5
+
+  # GetX for reactive state management and routing
+  get: ^4.7.2
+
+  # Store key-value data locally
+  shared_preferences: ^2.5.3
+
+  # Load and cache images from the internet efficiently
+  cached_network_image: ^3.4.1
+
+  # Access to commonly used locations on the filesystem
+  path_provider: ^2.1.5
+
+  # Share content with other apps (text, images, etc.)
+  share_plus: ^11.0.0
+
+  # Recommended Flutter lints for better code quality
   flutter_lints: ^6.0.0
+
+  # Play audio files (online and offline)
+  audioplayers: ^6.5.0
 
 dev_dependencies:
   flutter_test:
