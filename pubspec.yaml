@@ -14,10 +14,20 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.8
+  get: ^4.7.2
+  google_fonts: ^6.2.1
+  flutter_lints: ^6.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  flutter_launcher_icons: "^0.14.4"
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  image_path: "assets/applogo.png"
+  min_sdk_android: 21
 
   flutter_lints: ^5.0.0
 
