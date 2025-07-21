@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../components/custom bottom bar/custom_bottom_bar.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -6,6 +7,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(bottomNavigationBar: CustomBottomBar());
+    return SafeArea(child: Scaffold(bottomNavigationBar: CustomBottomBar()));
   }
 }
