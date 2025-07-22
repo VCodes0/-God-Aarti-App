@@ -1,12 +1,12 @@
-import 'package:aarti_app/controller/trending_aartis_controller.dart';
+import 'package:aarti_app/controller/fetival_list_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../main.dart';
 import '../music screen/music_screen.dart';
 
-class BuildTrendingAartiWidget extends StatelessWidget {
-  const BuildTrendingAartiWidget({super.key});
+class BuildFestivalAarti extends StatelessWidget {
+  const BuildFestivalAarti({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,26 +20,22 @@ class BuildTrendingAartiWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const Text(
-                "Trending Aarti’s",
+                "Festival's",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ],
           ),
           SizedBox(height: mq.height * .02),
           Expanded(
-            child: Consumer<TrendingAartisController>(
+            child: Consumer<FestivalListController>(
               builder: (context, controller, child) {
-                if (controller.isLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (controller.trendingAartis.isEmpty) {
-                  return const Center(child: Text("No data found"));
-                } else {
+                if (!controller.isLoading) {
                   return ListView.builder(
                     scrollDirection: Axis.horizontal,
                     physics: BouncingScrollPhysics(),
-                    itemCount: controller.trendingAartis.length,
+                    itemCount: controller.getFestivalData.length,
                     itemBuilder: (context, index) {
-                      final item = controller.trendingAartis[index];
+                      final item = controller.getFestivalData[index];
                       return Padding(
                         padding: EdgeInsets.only(right: 10.0),
                         child: Column(
@@ -63,10 +59,10 @@ class BuildTrendingAartiWidget extends StatelessWidget {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(15),
                                   child:
-                                      item.bgImage != null &&
-                                          item.bgImage!.isNotEmpty
+                                      item.catImage != null &&
+                                          item.catImage!.isNotEmpty
                                       ? Image.network(
-                                          item.bgImage!,
+                                          item.catImage!,
                                           fit: BoxFit.cover,
                                           errorBuilder:
                                               (context, error, stackTrace) =>
@@ -90,7 +86,7 @@ class BuildTrendingAartiWidget extends StatelessWidget {
                             SizedBox(
                               width: 100,
                               child: Text(
-                                item.title ?? 'No Title',
+                                item.name ?? 'No Title',
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   fontSize: 14,
@@ -105,6 +101,8 @@ class BuildTrendingAartiWidget extends StatelessWidget {
                       );
                     },
                   );
+                } else {
+                  return const Center(child: CircularProgressIndicator());
                 }
               },
             ),

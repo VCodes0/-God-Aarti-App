@@ -1,4 +1,5 @@
 import 'package:aarti_app/controller/recently_played_controller.dart';
+import 'package:aarti_app/controller/trending_aartis_controller.dart';
 import 'package:aarti_app/views/get%20started/get_started.dart';
 import 'package:aarti_app/views/language/language_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'controller/fetival_list_controller.dart';
 import 'views/splash/splash_screen.dart';
 
 late Size mq;
@@ -21,6 +23,8 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => RecentlyPlayedController()),
+        ChangeNotifierProvider(create: (_) => TrendingAartisController()),
+        ChangeNotifierProvider(create: (_) => FestivalListController()),
       ],
       child: const MyApp(),
     ),
