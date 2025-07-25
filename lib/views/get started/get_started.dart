@@ -166,16 +166,16 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                 ),
               ),
               Positioned(
-                top: mq.height * 0.09,
-                left: mq.width * 0.08,
+                top: mq.height * 0.075,
+                left: mq.width * 0.02,
                 child: buildImageCard(
                   assetPath: 'assets/start.png',
                   onTap: () => Get.to(() => HomeScreen()),
                 ),
               ),
               Positioned(
-                top: mq.height * 0.12,
-                right: mq.width * 0.08,
+                top: mq.height * 0.10,
+                right: mq.width * 0.05,
                 child: buildImageCard(
                   assetPath: 'assets/privacy.png',
                   onTap: () => Get.to(() => TofuScreen2()),
@@ -183,7 +183,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
               ),
               Positioned(
                 top: mq.height * 0.32,
-                left: mq.width * 0.08,
+                left: mq.width * 0.02,
                 child: buildImageCard(
                   assetPath: 'assets/share.png',
                   onTap: () => Get.to(() => ShareScreen()),
@@ -191,7 +191,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
               ),
               Positioned(
                 top: mq.height * 0.35,
-                right: mq.width * 0.08,
+                right: mq.width * 0.05,
                 child: buildImageCard(
                   assetPath: 'assets/rate.png',
                   onTap: () => Get.to(() => RateUsScreen()),

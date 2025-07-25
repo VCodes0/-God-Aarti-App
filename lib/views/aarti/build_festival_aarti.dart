@@ -49,20 +49,6 @@ class BuildFestivalAarti extends StatelessWidget {
                                 shape: BoxShape.rectangle,
                               ),
                               child: GestureDetector(
-                                // onTap: () {
-                                //   final RecentlyPlayedModel data =
-                                //       RecentlyPlayedModel();
-                                //   Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //       builder: (context) => MusicScreen3(
-                                //         data: item,
-                                //         imageUrl: item.catImage ?? '',
-                                //         audioUrl: data.audio ?? '',
-                                //       ),
-                                //     ),
-                                //   );
-                                // },
                                 onTap: () {
                                   Get.to(ShowFestivalAartis(data: item));
                                 },

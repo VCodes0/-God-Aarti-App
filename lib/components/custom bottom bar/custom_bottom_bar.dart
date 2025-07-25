@@ -18,17 +18,17 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
     {
       'icon': 'assets/active_hand.png',
       'selectedIcon': 'assets/inactive_hand.png',
-      'label': 'Aarti'
+      'label': 'Aarti',
     },
     {
       'icon': 'assets/active_wallpaper.png',
       'selectedIcon': 'assets/inactive_wallpaper.png',
-      'label': 'Wallpaper'
+      'label': 'Wallpaper',
     },
     {
       'icon': 'assets/active_download.png',
       'selectedIcon': 'assets/inactive_download.png',
-      'label': 'Downloads'
+      'label': 'Downloads',
     },
   ];
 
@@ -54,58 +54,65 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(40),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: List.generate(items.length, (index) {
-                    final item = items[index];
-                    final isSelected = index == selectedIndex;
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: List.generate(items.length, (index) {
+                      final item = items[index];
+                      final isSelected = index == selectedIndex;
 
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedIndex = index;
-                        });
-                      },
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          gradient: isSelected
-                              ? const LinearGradient(
-                            colors: [
-                              Color(0xFFFF9800),
-                              Color(0xFFFFC107),
-                            ],
-                          )
-                              : null,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Row(
-                          children: [
-                            Image.asset(
-                              isSelected ? item['selectedIcon'] : item['icon'],
-                              width: 24,
-                              height: 24,
-                              color: isSelected ? Colors.white : Colors.grey,
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
-                              item['label'],
-                              style: TextStyle(
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedIndex = index;
+                          });
+                        },
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 10,
+                          ),
+                          decoration: BoxDecoration(
+                            gradient: isSelected
+                                ? const LinearGradient(
+                                    colors: [
+                                      Color(0xFFFF9800),
+                                      Color(0xFFFFC107),
+                                    ],
+                                  )
+                                : null,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                isSelected
+                                    ? item['selectedIcon']
+                                    : item['icon'],
+                                width: 24,
+                                height: 24,
                                 color: isSelected ? Colors.white : Colors.grey,
-                                fontWeight: isSelected
-                                    ? FontWeight.bold
-                                    : FontWeight.normal,
                               ),
-                            ),
-                          ],
+                              const SizedBox(width: 6),
+                              Text(
+                                item['label'],
+                                style: TextStyle(
+                                  color: isSelected
+                                      ? Colors.white
+                                      : Colors.grey,
+                                  fontWeight: isSelected
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  }),
+                      );
+                    }),
+                  ),
                 ),
               ),
             ),

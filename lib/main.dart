@@ -1,3 +1,4 @@
+import 'package:aarti_app/controller/all_god_catefory_controller.dart';
 import 'package:aarti_app/controller/recently_played_controller.dart';
 import 'package:aarti_app/controller/trending_aartis_controller.dart';
 import 'package:aarti_app/views/get%20started/get_started.dart';
@@ -27,6 +28,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => TrendingAartisController()),
         ChangeNotifierProvider(create: (_) => FestivalListController()),
         ChangeNotifierProvider(create: (_) => FestivalAartiListController()),
+        ChangeNotifierProvider(create: (_) => AllGodCateforyController()),
       ],
       child: const MyApp(),
     ),

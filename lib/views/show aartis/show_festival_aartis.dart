@@ -28,23 +28,8 @@ class _ShowFestivalAartisState extends State<ShowFestivalAartis> {
   }
 
   Future<void> shareAarti(String title) async {
-    final scaffoldMessenger = ScaffoldMessenger.of(context);
-
     // ignore: deprecated_member_use
-    final result = await Share.share(
-      'Listen to this Aarti: $title',
-      subject: 'Share Aarti',
-    );
-
-    if (result.status == ShareResultStatus.success) {
-      scaffoldMessenger.showSnackBar(
-        const SnackBar(content: Text("Aarti shared successfully")),
-      );
-    } else if (result.status == ShareResultStatus.dismissed) {
-      scaffoldMessenger.showSnackBar(
-        const SnackBar(content: Text("Aarti sharing cancelled")),
-      );
-    }
+    await Share.share('Listen to this Aarti: $title', subject: 'Share Aarti');
   }
 
   @override
