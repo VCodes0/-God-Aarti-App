@@ -13,7 +13,8 @@ class WallpaperScreen extends StatelessWidget {
         leading: IconButton(
           onPressed: () => Get.back(),
           icon: Icon(CupertinoIcons.back),
-        ),      ),
+        ),
+      ),
     );
   }
 }

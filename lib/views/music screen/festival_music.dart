@@ -1,76 +1,76 @@
 import 'dart:async';
-
-import 'package:aarti_app/main.dart';
-import 'package:aarti_app/models/recently_played_model.dart';
-import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:aarti_app/controller/fetival_list_controller.dart';
+import 'package:aarti_app/models/festival_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:audioplayers/audioplayers.dart';
 
-import '../../controller/recently_played_controller.dart';
-
-class MusicScreen extends StatefulWidget {
-  final RecentlyPlayedModel item;
+class MusicScreen3 extends StatefulWidget {
+  final Data data;
   final String imageUrl;
   final String audioUrl;
 
-  const MusicScreen({
+  const MusicScreen3({
     super.key,
-    required this.item,
+    required this.data,
     required this.imageUrl,
     required this.audioUrl,
   });
 
   @override
-  State<MusicScreen> createState() => _MusicScreenState();
+  State<MusicScreen3> createState() => _MusicScreen3State();
 }
 
-class _MusicScreenState extends State<MusicScreen> {
-  late RecentlyPlayedController _rplayProvider;
+class _MusicScreen3State extends State<MusicScreen3> {
   final AudioPlayer _audioPlayer = AudioPlayer();
-
   bool isPlaying = false;
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
 
-  late final StreamSubscription<PlayerState> _playerStateSub;
-  late final StreamSubscription<Duration> _durationSub;
-  late final StreamSubscription<Duration> _positionSub;
+  late StreamSubscription<PlayerState> _playerStateSubscription;
+  late StreamSubscription<Duration> _durationSubscription;
+  late StreamSubscription<Duration> _positionSubscription;
+
+  late FestivalListController _data;
 
   @override
   void initState() {
     super.initState();
 
-    _playerStateSub = _audioPlayer.onPlayerStateChanged.listen((state) {
-      if (mounted) {
-        setState(() {
-          isPlaying = state == PlayerState.playing;
-        });
-      }
+    _playerStateSubscription = _audioPlayer.onPlayerStateChanged.listen((
+      state,
+    ) {
+      if (!mounted) return;
+      setState(() {
+        isPlaying = state == PlayerState.playing;
+      });
     });
 
-    _durationSub = _audioPlayer.onDurationChanged.listen((newDuration) {
-      if (mounted) {
-        setState(() => duration = newDuration);
-      }
+    _durationSubscription = _audioPlayer.onDurationChanged.listen((
+      newDuration,
+    ) {
+      if (!mounted) return;
+      setState(() => duration = newDuration);
     });
 
-    _positionSub = _audioPlayer.onPositionChanged.listen((newPosition) {
-      if (mounted) {
-        setState(() => position = newPosition);
-      }
+    _positionSubscription = _audioPlayer.onPositionChanged.listen((
+      newPosition,
+    ) {
+      if (!mounted) return;
+      setState(() => position = newPosition);
     });
 
-    _rplayProvider = RecentlyPlayedController();
-    context.read<RecentlyPlayedController>().getRecentlyPlayedData();
+    _data = FestivalListController();
+    _data.getFestivalAartiData();
   }
 
   @override
   void dispose() {
-    _playerStateSub.cancel();
-    _durationSub.cancel();
-    _positionSub.cancel();
+    _playerStateSubscription.cancel();
+    _durationSubscription.cancel();
+    _positionSubscription.cancel();
     _audioPlayer.dispose();
+    _data.dispose();
     super.dispose();
   }
 
@@ -83,23 +83,41 @@ class _MusicScreenState extends State<MusicScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<RecentlyPlayedController>.value(
-      value: _rplayProvider,
+    return ChangeNotifierProvider<FestivalListController>.value(
+      value: _data,
       child: Scaffold(
         body: Stack(
           fit: StackFit.expand,
           children: [
-            Image.network(widget.imageUrl, fit: BoxFit.cover),
+            widget.imageUrl.isNotEmpty
+                ? Image.network(
+                    widget.imageUrl,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) => const Center(
+                      child: Icon(
+                        Icons.broken_image,
+                        size: 100,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  )
+                : Container(
+                    color: Colors.grey[800],
+                    child: const Center(
+                      child: Icon(
+                        Icons.image_not_supported,
+                        size: 100,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
             Container(color: Colors.black.withValues(alpha: 0.5)),
             SafeArea(
               child: Column(
                 children: [
                   const Spacer(),
                   Slider(
-                    value: position.inSeconds.toDouble().clamp(
-                      0,
-                      duration.inSeconds.toDouble(),
-                    ),
+                    value: position.inSeconds.toDouble(),
                     min: 0,
                     max: duration.inSeconds.toDouble(),
                     onChanged: (value) async {
@@ -131,11 +149,9 @@ class _MusicScreenState extends State<MusicScreen> {
                       IconButton(
                         icon: const Icon(Icons.replay_10, color: Colors.white),
                         onPressed: () {
-                          final newSeconds = (position.inSeconds - 10).clamp(
-                            0,
-                            duration.inSeconds,
+                          _audioPlayer.seek(
+                            Duration(seconds: position.inSeconds - 10),
                           );
-                          _audioPlayer.seek(Duration(seconds: newSeconds));
                         },
                       ),
                       IconButton(
@@ -145,43 +161,39 @@ class _MusicScreenState extends State<MusicScreen> {
                           color: Colors.orange,
                         ),
                         onPressed: () async {
-                          if (isPlaying) {
-                            await _audioPlayer.pause();
+                          if (widget.audioUrl.isNotEmpty) {
+                            if (isPlaying) {
+                              await _audioPlayer.pause();
+                            } else {
+                              await _audioPlayer.play(
+                                UrlSource(widget.audioUrl),
+                              );
+                            }
                           } else {
-                            await _audioPlayer.play(UrlSource(widget.audioUrl));
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    'Audio not available for this Aarti.',
+                                  ),
+                                ),
+                              );
+                            }
                           }
                         },
                       ),
                       IconButton(
                         icon: const Icon(Icons.forward_10, color: Colors.white),
                         onPressed: () {
-                          final newSeconds = (position.inSeconds + 10).clamp(
-                            0,
-                            duration.inSeconds,
+                          _audioPlayer.seek(
+                            Duration(seconds: position.inSeconds + 10),
                           );
-                          _audioPlayer.seek(Duration(seconds: newSeconds));
                         },
                       ),
                     ],
                   ),
                   const SizedBox(height: 40),
                 ],
-              ),
-            ),
-            Positioned(
-              top: mq.height * 0.02,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: Text(
-                  "${widget.item.title}",
-                  style: const TextStyle(
-                    color: CupertinoColors.white,
-                    fontSize: 21,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
               ),
             ),
           ],

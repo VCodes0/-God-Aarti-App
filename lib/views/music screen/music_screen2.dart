@@ -9,12 +9,12 @@ import 'package:provider/provider.dart';
 
 import '../../controller/recently_played_controller.dart';
 
-class MusicScreen extends StatefulWidget {
+class MusicScreen2 extends StatefulWidget {
   final RecentlyPlayedModel item;
   final String imageUrl;
   final String audioUrl;
 
-  const MusicScreen({
+  const MusicScreen2({
     super.key,
     required this.item,
     required this.imageUrl,
@@ -22,10 +22,10 @@ class MusicScreen extends StatefulWidget {
   });
 
   @override
-  State<MusicScreen> createState() => _MusicScreenState();
+  State<MusicScreen2> createState() => _MusicScreen2State();
 }
 
-class _MusicScreenState extends State<MusicScreen> {
+class _MusicScreen2State extends State<MusicScreen2> {
   late RecentlyPlayedController _rplayProvider;
   final AudioPlayer _audioPlayer = AudioPlayer();
 

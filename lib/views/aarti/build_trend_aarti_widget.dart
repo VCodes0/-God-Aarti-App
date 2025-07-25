@@ -5,9 +5,14 @@ import 'package:provider/provider.dart';
 import '../../main.dart';
 import '../music screen/music_screen.dart';
 
-class BuildTrendingAartiWidget extends StatelessWidget {
+class BuildTrendingAartiWidget extends StatefulWidget {
   const BuildTrendingAartiWidget({super.key});
 
+  @override
+  State<BuildTrendingAartiWidget> createState() => _BuildTrendingAartiWidgetState();
+}
+
+class _BuildTrendingAartiWidgetState extends State<BuildTrendingAartiWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,8 +61,11 @@ class BuildTrendingAartiWidget extends StatelessWidget {
                                 onTap: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        MusicScreen(id: "${item.id}"),
+                                    builder: (context) => MusicScreen(
+                                      item: item,
+                                      imageUrl: "${item.mainImage}",
+                                      audioUrl: "${item.audio}",
+                                    ),
                                   ),
                                 ),
                                 child: ClipRRect(

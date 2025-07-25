@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'controller/festival_aarti_list_controller.dart';
 import 'controller/fetival_list_controller.dart';
 import 'views/splash/splash_screen.dart';
 
@@ -25,6 +26,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => RecentlyPlayedController()),
         ChangeNotifierProvider(create: (_) => TrendingAartisController()),
         ChangeNotifierProvider(create: (_) => FestivalListController()),
+        ChangeNotifierProvider(create: (_) => FestivalAartiListController()),
       ],
       child: const MyApp(),
     ),

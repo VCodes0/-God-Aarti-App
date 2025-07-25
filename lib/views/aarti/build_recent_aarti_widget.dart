@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../controller/recently_played_controller.dart';
 import '../../main.dart';
+import '../music screen/music_screen2.dart';
 
 class BuildRecentAartiWidget extends StatefulWidget {
   const BuildRecentAartiWidget({super.key});
@@ -60,29 +61,41 @@ class _BuildRecentAartiWidgetState extends State<BuildRecentAartiWidget> {
                                 ),
                                 shape: BoxShape.rectangle,
                               ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(15),
-                                child:
-                                    item.withoutBgImage != null &&
-                                        item.withoutBgImage!.isNotEmpty
-                                    ? Image.network(
-                                        item.withoutBgImage!,
-                                        fit: BoxFit.cover,
-                                        errorBuilder:
-                                            (context, error, stackTrace) =>
-                                                const Icon(
-                                                  Icons.broken_image,
-                                                  size: 50,
-                                                  color: Colors.grey,
-                                                ),
-                                      )
-                                    : const Center(
-                                        child: Icon(
-                                          Icons.image_not_supported,
-                                          size: 40,
-                                          color: Colors.grey,
+                              child: GestureDetector(
+                                onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MusicScreen2(
+                                      item: item,
+                                      imageUrl: '${item.withoutBgImage}',
+                                      audioUrl: '${item.audio}',
+                                    ),
+                                  ),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child:
+                                      item.withoutBgImage != null &&
+                                          item.withoutBgImage!.isNotEmpty
+                                      ? Image.network(
+                                          item.withoutBgImage!,
+                                          fit: BoxFit.cover,
+                                          errorBuilder:
+                                              (context, error, stackTrace) =>
+                                                  const Icon(
+                                                    Icons.broken_image,
+                                                    size: 50,
+                                                    color: Colors.grey,
+                                                  ),
+                                        )
+                                      : const Center(
+                                          child: Icon(
+                                            Icons.image_not_supported,
+                                            size: 40,
+                                            color: Colors.grey,
+                                          ),
                                         ),
-                                      ),
+                                ),
                               ),
                             ),
                             const SizedBox(height: 5),

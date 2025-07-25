@@ -1,6 +1,5 @@
 import 'package:aarti_app/views/rate%20us/rate_us_screen.dart';
 import 'package:aarti_app/views/share/share_screen.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../components/build image card/build_image_card.dart';
@@ -51,16 +50,11 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                   radius: mq.height * .08,
                   backgroundColor: Colors.deepOrange,
                   child: ClipOval(
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          'https://assets.ganeshaspeaks.com/wp-content/uploads/2018/03/hanuman-jayanti-2018-600.webp',
+                    child: Image.asset(
+                      "assets/applogo.png",
                       fit: BoxFit.cover,
-                      width: mq.height * .16, // diameter
+                      width: mq.height * .16,
                       height: mq.height * .16,
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
                     ),
                   ),
                 ),
@@ -109,7 +103,6 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                   Navigator.pop(context);
                 },
               ),
-
               Padding(
                 padding: const EdgeInsets.only(
                   left: 16.0,
@@ -172,8 +165,6 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                   ),
                 ),
               ),
-
-              // Get Started Card
               Positioned(
                 top: mq.height * 0.09,
                 left: mq.width * 0.08,
@@ -182,8 +173,6 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                   onTap: () => Get.to(() => HomeScreen()),
                 ),
               ),
-
-              // Privacy Card
               Positioned(
                 top: mq.height * 0.12,
                 right: mq.width * 0.08,
@@ -192,8 +181,6 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                   onTap: () => Get.to(() => TofuScreen2()),
                 ),
               ),
-
-              // Share Card
               Positioned(
                 top: mq.height * 0.32,
                 left: mq.width * 0.08,
@@ -202,8 +189,6 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                   onTap: () => Get.to(() => ShareScreen()),
                 ),
               ),
-
-              // Rate Us Card
               Positioned(
                 top: mq.height * 0.35,
                 right: mq.width * 0.08,
@@ -212,8 +197,6 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                   onTap: () => Get.to(() => RateUsScreen()),
                 ),
               ),
-
-              // Bottom Image
               Positioned(
                 bottom: mq.height * 0.02,
                 left: 0,

@@ -1,9 +1,9 @@
 import 'package:aarti_app/controller/fetival_list_controller.dart';
+import 'package:aarti_app/views/show%20aartis/show_festival_aartis.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-
 import '../../main.dart';
-import '../music screen/music_screen.dart';
 
 class BuildFestivalAarti extends StatelessWidget {
   const BuildFestivalAarti({super.key});
@@ -34,8 +34,8 @@ class BuildFestivalAarti extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     physics: BouncingScrollPhysics(),
                     itemCount: controller.getFestivalData.length,
-                    itemBuilder: (context, index) {
-                      final item = controller.getFestivalData[index];
+                    itemBuilder: (context, i) {
+                      final item = controller.getFestivalData[i];
                       return Padding(
                         padding: EdgeInsets.only(right: 10.0),
                         child: Column(
@@ -49,13 +49,23 @@ class BuildFestivalAarti extends StatelessWidget {
                                 shape: BoxShape.rectangle,
                               ),
                               child: GestureDetector(
-                                onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        MusicScreen(id: "${item.id}"),
-                                  ),
-                                ),
+                                // onTap: () {
+                                //   final RecentlyPlayedModel data =
+                                //       RecentlyPlayedModel();
+                                //   Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //       builder: (context) => MusicScreen3(
+                                //         data: item,
+                                //         imageUrl: item.catImage ?? '',
+                                //         audioUrl: data.audio ?? '',
+                                //       ),
+                                //     ),
+                                //   );
+                                // },
+                                onTap: () {
+                                  Get.to(ShowFestivalAartis(data: item));
+                                },
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(15),
                                   child:
