@@ -10,6 +10,8 @@ class BuildFestivalAarti extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = context.watch<FestivalListController>();
+
     return Container(
       width: mq.width * .94,
       height: mq.height * .32,
@@ -18,26 +20,22 @@ class BuildFestivalAarti extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const Text(
-                "Festival's",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
+            children: const [
+              Text("Festival's", style: TextStyle(fontWeight: FontWeight.bold)),
             ],
           ),
           SizedBox(height: mq.height * .02),
           Expanded(
-            child: Consumer<FestivalListController>(
-              builder: (context, controller, child) {
-                if (!controller.isLoading) {
-                  return ListView.builder(
+            child: controller.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     itemCount: controller.getFestivalData.length,
                     itemBuilder: (context, i) {
                       final item = controller.getFestivalData[i];
                       return Padding(
-                        padding: EdgeInsets.only(right: 10.0),
+                        padding: const EdgeInsets.only(right: 10.0),
                         child: Column(
                           children: [
                             Container(
@@ -46,7 +44,6 @@ class BuildFestivalAarti extends StatelessWidget {
                               decoration: BoxDecoration(
                                 color: Colors.orange.shade200,
                                 borderRadius: BorderRadius.circular(15),
-                                shape: BoxShape.rectangle,
                               ),
                               child: GestureDetector(
                                 onTap: () {
@@ -60,13 +57,12 @@ class BuildFestivalAarti extends StatelessWidget {
                                       ? Image.network(
                                           item.catImage!,
                                           fit: BoxFit.cover,
-                                          errorBuilder:
-                                              (context, error, stackTrace) =>
-                                                  const Icon(
-                                                    Icons.broken_image,
-                                                    size: 50,
-                                                    color: Colors.grey,
-                                                  ),
+                                          errorBuilder: (context, error, _) =>
+                                              const Icon(
+                                                Icons.broken_image,
+                                                size: 50,
+                                                color: Colors.grey,
+                                              ),
                                         )
                                       : const Center(
                                           child: Icon(
@@ -96,12 +92,7 @@ class BuildFestivalAarti extends StatelessWidget {
                         ),
                       );
                     },
-                  );
-                } else {
-                  return const Center(child: CircularProgressIndicator());
-                }
-              },
-            ),
+                  ),
           ),
         ],
       ),

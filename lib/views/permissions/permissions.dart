@@ -5,7 +5,6 @@ import '../../components/CustomNxtButton/custom_next_button.dart';
 import '../../widgets/buildPermissionTile/build_permission_tile.dart';
 import '../get started/get_started.dart';
 
-
 class PermissionsScreen extends StatefulWidget {
   const PermissionsScreen({super.key});
 
@@ -57,8 +56,6 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
             ),
           ),
           SizedBox(height: screen.height * 0.03),
-
-          /// CONTACTS PERMISSION
           buildPermissionTile(
             screen,
             iconPath: "assets/contact.png",
@@ -71,10 +68,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
               });
             },
           ),
-
           SizedBox(height: screen.height * 0.02),
-
-          /// MEDIA PERMISSION
           buildPermissionTile(
             screen,
             iconPath: "assets/folder.png",
@@ -87,20 +81,14 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
               });
             },
           ),
-
           SizedBox(height: screen.height * 0.08),
-
-          /// CONTINUE BUTTON
           Center(
             child: InkWell(
               onTap: () => Get.to(() => GetStartedScreen()),
               child: CustomNxtButton(text: "Continue"),
             ),
           ),
-
           SizedBox(height: screen.height * 0.1),
-
-          /// AD SPACE
           Container(
             height: screen.height * 0.15,
             width: double.infinity,

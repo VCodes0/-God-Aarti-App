@@ -15,6 +15,8 @@ class BuildRecentAartiWidget extends StatefulWidget {
 class _BuildRecentAartiWidgetState extends State<BuildRecentAartiWidget> {
   @override
   Widget build(BuildContext context) {
+    final controller = context.watch<RecentlyPlayedController>();
+
     return Container(
       width: mq.width * .94,
       height: mq.height * .32,
@@ -30,17 +32,13 @@ class _BuildRecentAartiWidgetState extends State<BuildRecentAartiWidget> {
           ),
           SizedBox(height: mq.height * .02),
           Expanded(
-            child: Builder(
-              builder: (context) {
-                final controller = context.watch<RecentlyPlayedController>();
-                if (controller.isLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (controller.recentlyPlayed.isEmpty) {
-                  return const Center(child: Text("No data found"));
-                } else {
-                  return ListView.builder(
+            child: controller.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : controller.recentlyPlayed.isEmpty
+                ? const Center(child: Text("No data found"))
+                : ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     itemCount: controller.recentlyPlayed.length,
                     itemBuilder: (context, index) {
                       final item = controller.recentlyPlayed[index];
@@ -53,13 +51,12 @@ class _BuildRecentAartiWidgetState extends State<BuildRecentAartiWidget> {
                               height: mq.height * .21,
                               decoration: BoxDecoration(
                                 color: Colors.orange.shade200,
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(70),
                                   topRight: Radius.circular(70),
                                   bottomLeft: Radius.circular(25),
                                   bottomRight: Radius.circular(25),
                                 ),
-                                shape: BoxShape.rectangle,
                               ),
                               child: GestureDetector(
                                 onTap: () => Navigator.push(
@@ -80,13 +77,12 @@ class _BuildRecentAartiWidgetState extends State<BuildRecentAartiWidget> {
                                       ? Image.network(
                                           item.withoutBgImage!,
                                           fit: BoxFit.cover,
-                                          errorBuilder:
-                                              (context, error, stackTrace) =>
-                                                  const Icon(
-                                                    Icons.broken_image,
-                                                    size: 50,
-                                                    color: Colors.grey,
-                                                  ),
+                                          errorBuilder: (context, error, _) =>
+                                              const Icon(
+                                                Icons.broken_image,
+                                                size: 50,
+                                                color: Colors.grey,
+                                              ),
                                         )
                                       : const Center(
                                           child: Icon(
@@ -102,7 +98,7 @@ class _BuildRecentAartiWidgetState extends State<BuildRecentAartiWidget> {
                             SizedBox(
                               width: 100,
                               child: Text(
-                                item.title?.toUpperCase() ?? 'No Title',
+                                item.title?.toUpperCase() ?? 'NO TITLE',
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   letterSpacing: 1,
@@ -117,10 +113,7 @@ class _BuildRecentAartiWidgetState extends State<BuildRecentAartiWidget> {
                         ),
                       );
                     },
-                  );
-                }
-              },
-            ),
+                  ),
           ),
         ],
       ),

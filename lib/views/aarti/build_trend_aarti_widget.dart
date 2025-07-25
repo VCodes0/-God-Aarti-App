@@ -9,44 +9,42 @@ class BuildTrendingAartiWidget extends StatefulWidget {
   const BuildTrendingAartiWidget({super.key});
 
   @override
-  State<BuildTrendingAartiWidget> createState() => _BuildTrendingAartiWidgetState();
+  State<BuildTrendingAartiWidget> createState() =>
+      _BuildTrendingAartiWidgetState();
 }
 
 class _BuildTrendingAartiWidgetState extends State<BuildTrendingAartiWidget> {
   @override
   Widget build(BuildContext context) {
+    final controller = context.watch<TrendingAartisController>();
+
     return Container(
       width: mq.width * .94,
       height: mq.height * .32,
       padding: const EdgeInsets.all(8),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const Text(
-                "Trending Aarti’s",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ],
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Trending Aarti’s",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
           SizedBox(height: mq.height * .02),
           Expanded(
-            child: Consumer<TrendingAartisController>(
-              builder: (context, controller, child) {
-                if (controller.isLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (controller.trendingAartis.isEmpty) {
-                  return const Center(child: Text("No data found"));
-                } else {
-                  return ListView.builder(
+            child: controller.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : controller.trendingAartis.isEmpty
+                ? const Center(child: Text("No data found"))
+                : ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     itemCount: controller.trendingAartis.length,
                     itemBuilder: (context, index) {
                       final item = controller.trendingAartis[index];
                       return Padding(
-                        padding: EdgeInsets.only(right: 10.0),
+                        padding: const EdgeInsets.only(right: 10.0),
                         child: Column(
                           children: [
                             Container(
@@ -55,19 +53,20 @@ class _BuildTrendingAartiWidgetState extends State<BuildTrendingAartiWidget> {
                               decoration: BoxDecoration(
                                 color: Colors.orange.shade200,
                                 borderRadius: BorderRadius.circular(15),
-                                shape: BoxShape.rectangle,
                               ),
                               child: GestureDetector(
-                                onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => MusicScreen(
-                                      item: item,
-                                      imageUrl: "${item.mainImage}",
-                                      audioUrl: "${item.audio}",
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MusicScreen(
+                                        item: item,
+                                        imageUrl: "${item.mainImage}",
+                                        audioUrl: "${item.audio}",
+                                      ),
                                     ),
-                                  ),
-                                ),
+                                  );
+                                },
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(15),
                                   child:
@@ -76,13 +75,12 @@ class _BuildTrendingAartiWidgetState extends State<BuildTrendingAartiWidget> {
                                       ? Image.network(
                                           item.bgImage!,
                                           fit: BoxFit.cover,
-                                          errorBuilder:
-                                              (context, error, stackTrace) =>
-                                                  const Icon(
-                                                    Icons.broken_image,
-                                                    size: 50,
-                                                    color: Colors.grey,
-                                                  ),
+                                          errorBuilder: (context, error, _) =>
+                                              const Icon(
+                                                Icons.broken_image,
+                                                size: 50,
+                                                color: Colors.grey,
+                                              ),
                                         )
                                       : const Center(
                                           child: Icon(
@@ -112,10 +110,7 @@ class _BuildTrendingAartiWidgetState extends State<BuildTrendingAartiWidget> {
                         ),
                       );
                     },
-                  );
-                }
-              },
-            ),
+                  ),
           ),
         ],
       ),

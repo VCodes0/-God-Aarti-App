@@ -31,8 +31,6 @@ class ShareScreen extends StatelessWidget {
               ),
             ),
           ),
-
-          // Close button
           Positioned(
             left: mq.width * 0.44,
             bottom: mq.height * 0.2,

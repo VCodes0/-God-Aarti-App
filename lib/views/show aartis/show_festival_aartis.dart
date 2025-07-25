@@ -1,12 +1,10 @@
 import 'package:aarti_app/controller/festival_aarti_list_controller.dart';
-import 'package:aarti_app/controller/recently_played_controller.dart';
 import 'package:aarti_app/views/music%20screen/festival_music.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../../controller/fetival_list_controller.dart';
 import '../../models/festival_model.dart';
 
 class ShowFestivalAartis extends StatefulWidget {
@@ -18,13 +16,12 @@ class ShowFestivalAartis extends StatefulWidget {
 }
 
 class _ShowFestivalAartisState extends State<ShowFestivalAartis> {
-  late FestivalAartiListController _data;
   @override
   void initState() {
     super.initState();
-    _data = FestivalAartiListController();
-    _data.setCategoryId("${widget.data.id}");
-    context.read<FestivalListController>().getFestivalAartiData();
+    final festivalController = context.read<FestivalAartiListController>();
+    festivalController.setCategoryId("${widget.data.id}");
+    festivalController.getFestivalAartiList();
   }
 
   Future<void> shareAarti(String title) async {
@@ -34,66 +31,65 @@ class _ShowFestivalAartisState extends State<ShowFestivalAartis> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<FestivalAartiListController>.value(
-      value: _data,
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text("${widget.data.name}"),
-        ),
-        body: Consumer<RecentlyPlayedController>(
-          builder: (context, provider, _) {
-            final recentlyPlayed = provider.recentlyPlayed;
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        title: Text(widget.data.name ?? 'Festival Aartis'),
+      ),
+      body: Consumer<FestivalAartiListController>(
+        builder: (context, controller, _) {
+          final aartiList = controller.festivalAartiList;
 
-            if (recentlyPlayed.isEmpty) {
-              return const Center(child: Text("No aarti found."));
-            }
+          if (controller.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-            return Padding(
-              padding: const EdgeInsets.all(8),
-              child: ListView.builder(
-                itemCount: recentlyPlayed.length,
-                itemBuilder: (context, index) {
-                  final item = recentlyPlayed[index];
-                  return InkWell(
-                    onTap: () {
-                      Get.to(
-                        () => MusicScreen3(
-                          data: Data(),
-                          imageUrl: "${item.mainImage}",
-                          audioUrl: "${item.audio}",
-                        ),
-                      );
-                    },
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                          item.withoutBgImage ?? '',
-                        ),
+          if (aartiList.isEmpty) {
+            return const Center(child: Text("No Aarti found."));
+          }
+
+          return Padding(
+            padding: const EdgeInsets.all(8),
+            child: ListView.builder(
+              itemCount: aartiList.length,
+              itemBuilder: (context, index) {
+                final item = aartiList[index];
+                return InkWell(
+                  onTap: () {
+                    Get.to(
+                      () => MusicScreen3(
+                        data: Data(),
+                        imageUrl: item.mainImage ?? '',
+                        audioUrl: item.audio ?? '',
                       ),
-                      title: Text(item.title ?? 'Untitled Aarti'),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              shareAarti(item.title ?? 'Untitled Aarti');
-                            },
-                            icon: const Icon(Icons.share),
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.more_vert),
-                          ),
-                        ],
-                      ),
+                    );
+                  },
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(item.withoutBgImage ?? ''),
                     ),
-                  );
-                },
-              ),
-            );
-          },
-        ),
+                    title: Text(item.title ?? 'Untitled Aarti'),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            shareAarti(item.title ?? 'Untitled Aarti');
+                          },
+                          icon: const Icon(Icons.share),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.more_vert),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        },
       ),
     );
   }

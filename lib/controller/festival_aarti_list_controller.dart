@@ -23,7 +23,7 @@ class FestivalAartiListController extends ChangeNotifier {
     _id = id;
   }
 
-  Future<void> getRecentlyPlayedData() async {
+  Future<void> getFestivalAartiList() async {
     _isLoading = true;
     try {
       final response = await dio.get(url);

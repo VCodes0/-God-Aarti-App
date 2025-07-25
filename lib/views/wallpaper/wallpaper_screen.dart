@@ -1,9 +1,12 @@
+import 'package:aarti_app/views/wallpaper/show_wallpaper.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../../main.dart';
 import '../../controller/all_god_catefory_controller.dart';
+import '../../models/wallpaper_post_model.dart';
 import '../../widgets/cearch bar/costom_seach_bar.dart';
 
 class WallpaperScreen extends StatefulWidget {
@@ -24,6 +27,7 @@ class _WallpaperScreenState extends State<WallpaperScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<AllGodCateforyController>();
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
@@ -34,62 +38,61 @@ class _WallpaperScreenState extends State<WallpaperScreen> {
               SizedBox(height: mq.height * .02),
               SearchBarWidget(
                 onChanged: (query) {
-                  Provider.of<AllGodCateforyController>(
-                    context,
-                    listen: false,
-                  ).filterGodCategories(query);
+                  context.read<AllGodCateforyController>().filterGodCategories(
+                    query,
+                  );
                 },
               ),
               SizedBox(height: mq.height * .02),
-              Consumer<AllGodCateforyController>(
-                builder: (context, provider, child) {
-                  if (provider.isLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else {
-                    return SizedBox(
-                      height: mq.height * .15,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: provider.godCategories.length,
-                        itemBuilder: (context, index) {
-                          final category = provider.godCategories[index];
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0,
-                            ),
-                            child: Column(
-                              children: [
-                                CircleAvatar(
-                                  radius: 45,
-                                  backgroundImage: category.catImage != null
-                                      ? CachedNetworkImageProvider(
-                                          category.catImage!,
-                                        )
-                                      : null,
-                                  child: category.catImage == null
-                                      ? const Icon(Icons.image_not_supported)
-                                      : null,
+              if (provider.isLoading)
+                const Center(child: CircularProgressIndicator())
+              else
+                SizedBox(
+                  height: mq.height * .15,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: provider.godCategories.length,
+                    itemBuilder: (context, index) {
+                      final category = provider.godCategories[index];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: () => Get.to(
+                                ShowWallpaper(
+                                  wallPaperPost: WallPaperPost(),
+                                  category: category,
                                 ),
-                                const SizedBox(height: 4),
-                                SizedBox(
-                                  width: 80,
-                                  child: Text(
-                                    category.catName ?? '',
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(fontSize: 12),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ],
+                              ),
+                              child: CircleAvatar(
+                                radius: 45,
+                                backgroundImage: category.catImage != null
+                                    ? CachedNetworkImageProvider(
+                                        category.catImage!,
+                                      )
+                                    : null,
+                                child: category.catImage == null
+                                    ? const Icon(Icons.image_not_supported)
+                                    : null,
+                              ),
                             ),
-                          );
-                        },
-                      ),
-                    );
-                  }
-                },
-              ),
-
+                            const SizedBox(height: 4),
+                            SizedBox(
+                              width: 80,
+                              child: Text(
+                                category.catName ?? '',
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(fontSize: 12),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
               SizedBox(height: mq.height * .025),
             ],
           ),

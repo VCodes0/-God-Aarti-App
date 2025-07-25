@@ -58,10 +58,7 @@ class _RateUsScreenState extends State<RateUsScreen> {
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 16),
-
-                // Stars
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(5, (index) {
@@ -79,10 +76,7 @@ class _RateUsScreenState extends State<RateUsScreen> {
                     );
                   }),
                 ),
-
                 const SizedBox(height: 20),
-
-                // Animal image
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Image.asset(
@@ -90,10 +84,7 @@ class _RateUsScreenState extends State<RateUsScreen> {
                     fit: BoxFit.contain,
                   ),
                 ),
-
                 const SizedBox(height: 27),
-
-                // Text
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
@@ -102,10 +93,7 @@ class _RateUsScreenState extends State<RateUsScreen> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-
                 const SizedBox(height: 16),
-
-                // Exit App button
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Row(

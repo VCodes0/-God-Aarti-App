@@ -5,9 +5,6 @@ import 'package:aarti_app/models/recently_played_model.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../../controller/recently_played_controller.dart';
 
 class MusicScreen extends StatefulWidget {
   final RecentlyPlayedModel item;
@@ -26,7 +23,6 @@ class MusicScreen extends StatefulWidget {
 }
 
 class _MusicScreenState extends State<MusicScreen> {
-  late RecentlyPlayedController _rplayProvider;
   final AudioPlayer _audioPlayer = AudioPlayer();
 
   bool isPlaying = false;
@@ -60,9 +56,6 @@ class _MusicScreenState extends State<MusicScreen> {
         setState(() => position = newPosition);
       }
     });
-
-    _rplayProvider = RecentlyPlayedController();
-    context.read<RecentlyPlayedController>().getRecentlyPlayedData();
   }
 
   @override
@@ -83,109 +76,108 @@ class _MusicScreenState extends State<MusicScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<RecentlyPlayedController>.value(
-      value: _rplayProvider,
-      child: Scaffold(
-        body: Stack(
-          fit: StackFit.expand,
-          children: [
-            Image.network(widget.imageUrl, fit: BoxFit.cover),
-            Container(color: Colors.black.withValues(alpha: 0.5)),
-            SafeArea(
-              child: Column(
-                children: [
-                  const Spacer(),
-                  Slider(
-                    value: position.inSeconds.toDouble().clamp(
-                      0,
-                      duration.inSeconds.toDouble(),
-                    ),
-                    min: 0,
-                    max: duration.inSeconds.toDouble(),
-                    onChanged: (value) async {
-                      final newPosition = Duration(seconds: value.toInt());
-                      await _audioPlayer.seek(newPosition);
-                    },
-                    activeColor: Colors.orange,
+    return Scaffold(
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.network(widget.imageUrl, fit: BoxFit.cover),
+          Container(
+            color: Colors.black.withAlpha(100),
+          ), // semi-transparent overlay
+          SafeArea(
+            child: Column(
+              children: [
+                const Spacer(),
+                Slider(
+                  value: position.inSeconds.toDouble().clamp(
+                    0,
+                    duration.inSeconds.toDouble(),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          _formatTime(position),
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                        Text(
-                          _formatTime(duration),
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  min: 0,
+                  max: duration.inSeconds.toDouble(),
+                  onChanged: (value) async {
+                    final newPosition = Duration(seconds: value.toInt());
+                    await _audioPlayer.seek(newPosition);
+                  },
+                  activeColor: Colors.orange,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                        icon: const Icon(Icons.replay_10, color: Colors.white),
-                        onPressed: () {
-                          final newSeconds = (position.inSeconds - 10).clamp(
-                            0,
-                            duration.inSeconds,
-                          );
-                          _audioPlayer.seek(Duration(seconds: newSeconds));
-                        },
+                      Text(
+                        _formatTime(position),
+                        style: const TextStyle(color: Colors.white),
                       ),
-                      IconButton(
-                        icon: Icon(
-                          isPlaying ? Icons.pause_circle : Icons.play_circle,
-                          size: 64,
-                          color: Colors.orange,
-                        ),
-                        onPressed: () async {
-                          if (isPlaying) {
-                            await _audioPlayer.pause();
-                          } else {
-                            await _audioPlayer.play(UrlSource(widget.audioUrl));
-                          }
-                        },
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.forward_10, color: Colors.white),
-                        onPressed: () {
-                          final newSeconds = (position.inSeconds + 10).clamp(
-                            0,
-                            duration.inSeconds,
-                          );
-                          _audioPlayer.seek(Duration(seconds: newSeconds));
-                        },
+                      Text(
+                        _formatTime(duration),
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 40),
-                ],
-              ),
-            ),
-            Positioned(
-              top: mq.height * 0.02,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: Text(
-                  "${widget.item.title}",
-                  style: const TextStyle(
-                    color: CupertinoColors.white,
-                    fontSize: 21,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  textAlign: TextAlign.center,
                 ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.replay_10, color: Colors.white),
+                      onPressed: () {
+                        final newSeconds = (position.inSeconds - 10).clamp(
+                          0,
+                          duration.inSeconds,
+                        );
+                        _audioPlayer.seek(Duration(seconds: newSeconds));
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        isPlaying ? Icons.pause_circle : Icons.play_circle,
+                        size: 64,
+                        color: Colors.orange,
+                      ),
+                      onPressed: () async {
+                        if (isPlaying) {
+                          await _audioPlayer.pause();
+                        } else {
+                          await _audioPlayer.play(UrlSource(widget.audioUrl));
+                        }
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.forward_10, color: Colors.white),
+                      onPressed: () {
+                        final newSeconds = (position.inSeconds + 10).clamp(
+                          0,
+                          duration.inSeconds,
+                        );
+                        _audioPlayer.seek(Duration(seconds: newSeconds));
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 40),
+              ],
+            ),
+          ),
+          Positioned(
+            top: mq.height * 0.02,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Text(
+                widget.item.title ?? '',
+                style: const TextStyle(
+                  color: CupertinoColors.white,
+                  fontSize: 21,
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.center,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

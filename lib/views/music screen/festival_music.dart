@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:aarti_app/controller/fetival_list_controller.dart';
 import 'package:aarti_app/models/festival_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class MusicScreen3 extends StatefulWidget {
@@ -83,121 +82,116 @@ class _MusicScreen3State extends State<MusicScreen3> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<FestivalListController>.value(
-      value: _data,
-      child: Scaffold(
-        body: Stack(
-          fit: StackFit.expand,
-          children: [
-            widget.imageUrl.isNotEmpty
-                ? Image.network(
-                    widget.imageUrl,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => const Center(
-                      child: Icon(
-                        Icons.broken_image,
-                        size: 100,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  )
-                : Container(
-                    color: Colors.grey[800],
-                    child: const Center(
-                      child: Icon(
-                        Icons.image_not_supported,
-                        size: 100,
-                        color: Colors.grey,
-                      ),
+    return Scaffold(
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          widget.imageUrl.isNotEmpty
+              ? Image.network(
+                  widget.imageUrl,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => const Center(
+                    child: Icon(
+                      Icons.broken_image,
+                      size: 100,
+                      color: Colors.grey,
                     ),
                   ),
-            Container(color: Colors.black.withValues(alpha: 0.5)),
-            SafeArea(
-              child: Column(
-                children: [
-                  const Spacer(),
-                  Slider(
-                    value: position.inSeconds.toDouble(),
-                    min: 0,
-                    max: duration.inSeconds.toDouble(),
-                    onChanged: (value) async {
-                      final newPosition = Duration(seconds: value.toInt());
-                      await _audioPlayer.seek(newPosition);
-                    },
-                    activeColor: Colors.orange,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          _formatTime(position),
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                        Text(
-                          _formatTime(duration),
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      ],
+                )
+              : Container(
+                  color: Colors.grey[800],
+                  child: const Center(
+                    child: Icon(
+                      Icons.image_not_supported,
+                      size: 100,
+                      color: Colors.grey,
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                ),
+          Container(color: Colors.black.withValues(alpha: 0.5)),
+          SafeArea(
+            child: Column(
+              children: [
+                const Spacer(),
+                Slider(
+                  value: position.inSeconds.toDouble(),
+                  min: 0,
+                  max: duration.inSeconds.toDouble(),
+                  onChanged: (value) async {
+                    final newPosition = Duration(seconds: value.toInt());
+                    await _audioPlayer.seek(newPosition);
+                  },
+                  activeColor: Colors.orange,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                        icon: const Icon(Icons.replay_10, color: Colors.white),
-                        onPressed: () {
-                          _audioPlayer.seek(
-                            Duration(seconds: position.inSeconds - 10),
-                          );
-                        },
+                      Text(
+                        _formatTime(position),
+                        style: const TextStyle(color: Colors.white),
                       ),
-                      IconButton(
-                        icon: Icon(
-                          isPlaying ? Icons.pause_circle : Icons.play_circle,
-                          size: 64,
-                          color: Colors.orange,
-                        ),
-                        onPressed: () async {
-                          if (widget.audioUrl.isNotEmpty) {
-                            if (isPlaying) {
-                              await _audioPlayer.pause();
-                            } else {
-                              await _audioPlayer.play(
-                                UrlSource(widget.audioUrl),
-                              );
-                            }
-                          } else {
-                            if (mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    'Audio not available for this Aarti.',
-                                  ),
-                                ),
-                              );
-                            }
-                          }
-                        },
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.forward_10, color: Colors.white),
-                        onPressed: () {
-                          _audioPlayer.seek(
-                            Duration(seconds: position.inSeconds + 10),
-                          );
-                        },
+                      Text(
+                        _formatTime(duration),
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 40),
-                ],
-              ),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.replay_10, color: Colors.white),
+                      onPressed: () {
+                        _audioPlayer.seek(
+                          Duration(seconds: position.inSeconds - 10),
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        isPlaying ? Icons.pause_circle : Icons.play_circle,
+                        size: 64,
+                        color: Colors.orange,
+                      ),
+                      onPressed: () async {
+                        if (widget.audioUrl.isNotEmpty) {
+                          if (isPlaying) {
+                            await _audioPlayer.pause();
+                          } else {
+                            await _audioPlayer.play(UrlSource(widget.audioUrl));
+                          }
+                        } else {
+                          if (mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  'Audio not available for this Aarti.',
+                                ),
+                              ),
+                            );
+                          }
+                        }
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.forward_10, color: Colors.white),
+                      onPressed: () {
+                        _audioPlayer.seek(
+                          Duration(seconds: position.inSeconds + 10),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 40),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
