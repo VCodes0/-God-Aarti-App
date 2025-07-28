@@ -1,8 +1,11 @@
-import 'package:aarti_app/models/all_god_category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
 import '../../controller/wallpaper_post_controlle.dart';
 import '../../models/wallpaper_post_model.dart';
+import 'package:aarti_app/models/all_god_category_model.dart';
 
 class ShowWallpaper extends StatefulWidget {
   final GodData category;
@@ -29,6 +32,13 @@ class _ShowWallpaperState extends State<ShowWallpaper> {
     wpController.seeAllWallPapePost();
   }
 
+  bool isValidUrl(String url) {
+    final uri = Uri.tryParse(url);
+    return uri != null &&
+        uri.hasAbsolutePath &&
+        (uri.isScheme("http") || uri.isScheme("https"));
+  }
+
   @override
   Widget build(BuildContext context) {
     final wpController = context.watch<WallpaperPostController>();
@@ -37,30 +47,38 @@ class _ShowWallpaperState extends State<ShowWallpaper> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text("${widget.category.catName}"),
+        title: Text(widget.category.catName ?? "God Title"),
       ),
-      body: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: MasonryGridView.builder(
+          itemCount: wpController.allWallPaperPost.length,
+          gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+          ),
+          mainAxisSpacing: 10.0,
+          crossAxisSpacing: 10.0,
+          itemBuilder: (context, index) {
+            String imageUrl = wpController.allWallPaperPost[index].images ?? '';
+            if (!isValidUrl(imageUrl)) {
+              imageUrl = 'https://example.com/default-image.png';
+            }
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: CachedNetworkImage(
+                imageUrl: imageUrl,
+                fit: BoxFit.cover,
+                placeholder: (context, url) =>
+                    const Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => const Icon(
+                  Icons.broken_image,
+                  size: 50,
+                  color: Colors.grey,
+                ),
+              ),
+            );
+          },
         ),
-        itemCount: wpController.allWallPaperPost.length,
-        itemBuilder: (context, index) {
-          final imageUrl = wpController.allWallPaperPost[index].images;
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.network(
-              "$imageUrl",
-              fit: BoxFit.cover,
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) return child;
-                return const Center(child: CircularProgressIndicator());
-              },
-              errorBuilder: (context, error, stackTrace) {
-                return const Center(child: Icon(Icons.error));
-              },
-            ),
-          );
-        },
       ),
     );
   }

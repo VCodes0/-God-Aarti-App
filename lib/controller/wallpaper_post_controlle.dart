@@ -16,7 +16,7 @@ class WallpaperPostController extends ChangeNotifier {
   final dio = Dio();
   late String _id;
   String get url =>
-      "https://appy.trycatchtech.com/v3/all_god/trending_aarti?category_id=$_id";
+      "https://appy.trycatchtech.com/v3/all_god/all_god_wallpaper_post_list?category_id=$_id";
 
   void setCategoryId(String id) {
     _id = id;
