@@ -5,14 +5,9 @@ import '../../controller/recently_played_controller.dart';
 import '../../main.dart';
 import '../music screen/music_screen2.dart';
 
-class BuildRecentAartiWidget extends StatefulWidget {
+class BuildRecentAartiWidget extends StatelessWidget {
   const BuildRecentAartiWidget({super.key});
 
-  @override
-  State<BuildRecentAartiWidget> createState() => _BuildRecentAartiWidgetState();
-}
-
-class _BuildRecentAartiWidgetState extends State<BuildRecentAartiWidget> {
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<RecentlyPlayedController>();

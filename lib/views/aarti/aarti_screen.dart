@@ -66,7 +66,7 @@ class _AartiState extends State<AartiScreen> {
                   const BuildRecentAartiWidget(),
                   const BuildTrendingAartiWidget(),
                   const BuildFestivalAarti(),
-                  SizedBox(height: mq.height * .080),
+                  SizedBox(height: mq.height * .04),
                 ],
               ),
             ),

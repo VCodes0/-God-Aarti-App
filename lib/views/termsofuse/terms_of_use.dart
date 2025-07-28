@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../components/tofu/tofu_screen.dart';
 
-class TermsOfUseScreen extends StatefulWidget {
+class TermsOfUseScreen extends StatelessWidget {
   const TermsOfUseScreen({super.key});
 
-  @override
-  State<TermsOfUseScreen> createState() => _TermsOfUseScreenState();
-}
-
-class _TermsOfUseScreenState extends State<TermsOfUseScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

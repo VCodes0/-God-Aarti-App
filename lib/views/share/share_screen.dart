@@ -20,7 +20,7 @@ class ShareScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Coming Soon!',
+                    'Never Given Share Page',
                     style: TextStyle(
                       fontSize: mq.width * 0.045,
                       color: Colors.black,

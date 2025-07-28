@@ -5,15 +5,9 @@ import 'package:provider/provider.dart';
 import '../../main.dart';
 import '../music screen/music_screen.dart';
 
-class BuildTrendingAartiWidget extends StatefulWidget {
+class BuildTrendingAartiWidget extends StatelessWidget {
   const BuildTrendingAartiWidget({super.key});
 
-  @override
-  State<BuildTrendingAartiWidget> createState() =>
-      _BuildTrendingAartiWidgetState();
-}
-
-class _BuildTrendingAartiWidgetState extends State<BuildTrendingAartiWidget> {
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<TrendingAartisController>();

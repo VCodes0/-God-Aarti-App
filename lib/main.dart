@@ -16,7 +16,6 @@ import 'package:get/get.dart';
 
 late Size mq;
 int? initScreen;
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final SharedPreferences prefs = await SharedPreferences.getInstance();

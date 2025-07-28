@@ -13,14 +13,9 @@ import '../downloads/downloads_screen.dart';
 import '../home/home_screen.dart';
 import '../wallpaper/wallpaper_screen.dart';
 
-class GetStartedScreen extends StatefulWidget {
+class GetStartedScreen extends StatelessWidget {
   const GetStartedScreen({super.key});
 
-  @override
-  State<GetStartedScreen> createState() => _GetStartedScreenState();
-}
-
-class _GetStartedScreenState extends State<GetStartedScreen> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

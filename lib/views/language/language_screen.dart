@@ -7,7 +7,6 @@ import '../onboarding/firest/first_onboard.dart';
 
 class LanguageScreen extends StatefulWidget {
   const LanguageScreen({super.key});
-
   @override
   State<LanguageScreen> createState() => _LanguageScreenState();
 }
