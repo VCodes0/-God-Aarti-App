@@ -1,10 +1,10 @@
-class RecWallpaper {
+class RecAndTrendWallpaper {
   String? id;
   String? postImage;
 
-  RecWallpaper({this.id, this.postImage});
+  RecAndTrendWallpaper({this.id, this.postImage});
 
-  RecWallpaper.fromJson(Map<String, dynamic> json) {
+  RecAndTrendWallpaper.fromJson(Map<String, dynamic> json) {
     id = json["id"];
     postImage = json["post_image"];
   }
@@ -16,7 +16,7 @@ class RecWallpaper {
     return data;
   }
 
-  static List<RecWallpaper> getRecWallpaper(List data) {
-    return data.map((e) => RecWallpaper.fromJson(e)).toList();
+  static List<RecAndTrendWallpaper> getRecWallpaper(List data) {
+    return data.map((e) => RecAndTrendWallpaper.fromJson(e)).toList();
   }
 }

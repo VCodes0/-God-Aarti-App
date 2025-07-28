@@ -1,4 +1,8 @@
+import 'package:aarti_app/controller/recent_wallpaper.dart';
+import 'package:aarti_app/controller/trend_wallpaper_controller.dart';
+import 'package:aarti_app/views/wallpaper/recent_wallpaper.dart';
 import 'package:aarti_app/views/wallpaper/show_wallpaper.dart';
+import 'package:aarti_app/views/wallpaper/trnding_wallpaper.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
@@ -22,6 +26,12 @@ class _WallpaperScreenState extends State<WallpaperScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<AllGodCateforyController>().fetchGodCategories();
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<RecentWallpaperController>().giveRecentWallPaper();
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<TrendWallpaperController>().giveTrendWallpaper();
     });
   }
 
@@ -94,6 +104,10 @@ class _WallpaperScreenState extends State<WallpaperScreen> {
                   ),
                 ),
               SizedBox(height: mq.height * .025),
+              RecentWallpaper(),
+              SizedBox(height: mq.height * .025),
+              TrendWallPaper(),
+              SizedBox(height: mq.height * .075),
             ],
           ),
         ),

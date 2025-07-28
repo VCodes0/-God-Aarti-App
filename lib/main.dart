@@ -1,6 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'controller/festival_aarti_list_controller.dart';
 import 'controller/all_god_catefory_controller.dart';
+import 'controller/recent_wallpaper.dart';
+import 'controller/trend_wallpaper_controller.dart';
 import 'controller/trending_aartis_controller.dart';
 import 'controller/recently_played_controller.dart';
 import 'controller/wallpaper_post_controlle.dart';
@@ -31,6 +33,8 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => TrendingAartisController()),
         ChangeNotifierProvider(create: (_) => WallpaperPostController()),
         ChangeNotifierProvider(create: (_) => FestivalListController()),
+        ChangeNotifierProvider(create: (_) => RecentWallpaperController()),
+        ChangeNotifierProvider(create: (_) => TrendWallpaperController()),
       ],
       child: const MyApp(),
     ),
