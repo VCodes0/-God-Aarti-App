@@ -32,14 +32,7 @@ class GetStartedScreen extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              Align(
-                alignment: Alignment.topRight,
-                child: IconButton(
-                  icon: const Icon(Icons.chevron_left, color: Colors.grey),
-                  onPressed: () {},
-                ),
-              ),
-              SizedBox(height: mq.height * .05),
+              SizedBox(height: mq.height * .07),
               Center(
                 child: CircleAvatar(
                   radius: mq.height * .08,
@@ -54,7 +47,7 @@ class GetStartedScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: mq.height * .05),
+              SizedBox(height: mq.height * .03),
               Padding(
                 padding: const EdgeInsets.only(
                   left: 16.0,
@@ -74,6 +67,7 @@ class GetStartedScreen extends StatelessWidget {
                 icon: Icons.self_improvement,
                 text: 'Aarti',
                 onTap: () {
+                  Get.back();
                   Get.to(() => AartiScreen());
                 },
               ),
@@ -81,6 +75,7 @@ class GetStartedScreen extends StatelessWidget {
                 icon: Icons.wallpaper,
                 text: 'Wallpaper',
                 onTap: () {
+                  Get.back();
                   Get.to(() => WallpaperScreen());
                 },
               ),
@@ -88,14 +83,8 @@ class GetStartedScreen extends StatelessWidget {
                 icon: Icons.download,
                 text: 'Downloads',
                 onTap: () {
+                  Get.back();
                   Get.to(() => DownloadsScreen());
-                },
-              ),
-              buildDrawerItem(
-                icon: Icons.favorite,
-                text: 'Favorites',
-                onTap: () {
-                  Navigator.pop(context);
                 },
               ),
               Padding(
@@ -117,6 +106,7 @@ class GetStartedScreen extends StatelessWidget {
                 icon: Icons.privacy_tip,
                 text: 'Privacy Policy',
                 onTap: () {
+                  Get.back();
                   Get.to(() => TofuScreen2());
                 },
               ),
@@ -124,6 +114,7 @@ class GetStartedScreen extends StatelessWidget {
                 icon: Icons.description,
                 text: 'Terms of Use',
                 onTap: () {
+                  Get.back();
                   Get.to(() => TofuScreen3());
                 },
               ),
@@ -131,6 +122,7 @@ class GetStartedScreen extends StatelessWidget {
                 icon: Icons.language,
                 text: 'Language',
                 onTap: () {
+                  Get.back();
                   Get.to(() => LangScr());
                 },
               ),
@@ -165,7 +157,10 @@ class GetStartedScreen extends StatelessWidget {
                 left: mq.width * 0.02,
                 child: buildImageCard(
                   assetPath: 'assets/start.png',
-                  onTap: () => Get.to(() => HomeScreen()),
+                  onTap: () {
+                    Get.back();
+                    Get.to(() => HomeScreen());
+                  },
                 ),
               ),
               Positioned(
@@ -173,7 +168,10 @@ class GetStartedScreen extends StatelessWidget {
                 right: mq.width * 0.05,
                 child: buildImageCard(
                   assetPath: 'assets/privacy.png',
-                  onTap: () => Get.to(() => TofuScreen2()),
+                  onTap: () {
+                    Get.back();
+                    Get.to(() => TofuScreen2());
+                  },
                 ),
               ),
               Positioned(
@@ -181,7 +179,10 @@ class GetStartedScreen extends StatelessWidget {
                 left: mq.width * 0.02,
                 child: buildImageCard(
                   assetPath: 'assets/share.png',
-                  onTap: () => Get.to(() => ShareScreen()),
+                  onTap: () {
+                    Get.back();
+                    Get.to(() => ShareScreen());
+                  },
                 ),
               ),
               Positioned(
@@ -189,7 +190,10 @@ class GetStartedScreen extends StatelessWidget {
                 right: mq.width * 0.05,
                 child: buildImageCard(
                   assetPath: 'assets/rate.png',
-                  onTap: () => Get.to(() => RateUsScreen()),
+                  onTap: () {
+                    Get.back();
+                    Get.to(() => RateUsScreen());
+                  },
                 ),
               ),
               Positioned(

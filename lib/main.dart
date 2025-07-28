@@ -1,7 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'controller/festival_aarti_list_controller.dart';
 import 'controller/all_god_catefory_controller.dart';
-import 'controller/recent_wallpaper.dart';
 import 'controller/trend_wallpaper_controller.dart';
 import 'controller/trending_aartis_controller.dart';
 import 'controller/recently_played_controller.dart';
@@ -14,6 +13,7 @@ import 'views/splash/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'controller/recent_wallpaper.dart';
 import 'package:get/get.dart';
 
 late Size mq;
