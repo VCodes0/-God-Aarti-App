@@ -9,11 +9,11 @@ import 'controller/fetival_list_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'views/language/language_screen.dart';
 import 'views/get started/get_started.dart';
+import 'controller/recent_wallpaper.dart';
 import 'views/splash/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'controller/recent_wallpaper.dart';
 import 'package:get/get.dart';
 
 late Size mq;
@@ -28,13 +28,13 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => FestivalAartiListController()),
-        ChangeNotifierProvider(create: (_) => RecentlyPlayedController()),
+        ChangeNotifierProvider(create: (_) => RecentWallpaperController()),
         ChangeNotifierProvider(create: (_) => AllGodCateforyController()),
+        ChangeNotifierProvider(create: (_) => RecentlyPlayedController()),
+        ChangeNotifierProvider(create: (_) => TrendWallpaperController()),
         ChangeNotifierProvider(create: (_) => TrendingAartisController()),
         ChangeNotifierProvider(create: (_) => WallpaperPostController()),
         ChangeNotifierProvider(create: (_) => FestivalListController()),
-        ChangeNotifierProvider(create: (_) => RecentWallpaperController()),
-        ChangeNotifierProvider(create: (_) => TrendWallpaperController()),
       ],
       child: const MyApp(),
     ),

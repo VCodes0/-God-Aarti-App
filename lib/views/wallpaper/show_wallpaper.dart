@@ -1,9 +1,12 @@
+import 'package:aarti_app/views/wallpaper/download_wallpaper.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../controller/wallpaper_post_controlle.dart';
+import '../../main.dart';
 import '../../models/wallpaper_post_model.dart';
 import 'package:aarti_app/models/all_god_category_model.dart';
 
@@ -49,6 +52,10 @@ class _ShowWallpaperState extends State<ShowWallpaper> {
         elevation: 0,
         title: Text(widget.category.catName ?? "God Title"),
       ),
+      bottomNavigationBar: SizedBox(
+        width: mq.width,
+        child: Image.asset("assets/bottomimg.png"),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: MasonryGridView.builder(
@@ -59,21 +66,34 @@ class _ShowWallpaperState extends State<ShowWallpaper> {
           mainAxisSpacing: 10.0,
           crossAxisSpacing: 10.0,
           itemBuilder: (context, index) {
-            String imageUrl = wpController.allWallPaperPost[index].images ?? '';
+            final selectedWallpaper = wpController.allWallPaperPost[index];
+            String imageUrl = selectedWallpaper.images ?? '';
+
             if (!isValidUrl(imageUrl)) {
               imageUrl = 'https://example.com/default-image.png';
             }
-            return ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: CachedNetworkImage(
-                imageUrl: imageUrl,
-                fit: BoxFit.cover,
-                placeholder: (context, url) =>
-                    const Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => const Icon(
-                  Icons.broken_image,
-                  size: 50,
-                  color: Colors.grey,
+
+            return InkWell(
+              onTap: () {
+                Get.to(
+                  () => DownloadWallpaper(
+                    category: widget.category,
+                    wallPaperPost: selectedWallpaper,
+                  ),
+                );
+              },
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) =>
+                      const Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => const Icon(
+                    Icons.broken_image,
+                    size: 50,
+                    color: Colors.grey,
+                  ),
                 ),
               ),
             );

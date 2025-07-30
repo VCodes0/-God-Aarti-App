@@ -35,35 +35,37 @@ class TrendWallPaper extends StatelessWidget {
                         padding: const EdgeInsets.only(right: 10.0),
                         child: Column(
                           children: [
-                            Container(
-                              width: mq.width * .47,
-                              height: mq.height * .26,
-                              decoration: BoxDecoration(
-                                color: Colors.orange.shade200,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(15),
-                                child:
-                                    item.postImage != null &&
-                                        item.postImage!.isNotEmpty
-                                    ? Image.network(
-                                        item.postImage!,
-                                        fit: BoxFit.cover,
-                                        errorBuilder: (context, error, _) =>
-                                            const Icon(
-                                              Icons.broken_image,
-                                              size: 50,
-                                              color: Colors.grey,
-                                            ),
-                                      )
-                                    : const Center(
-                                        child: Icon(
-                                          Icons.image_not_supported,
-                                          size: 40,
-                                          color: Colors.grey,
+                            InkWell(
+                              child: Container(
+                                width: mq.width * .47,
+                                height: mq.height * .26,
+                                decoration: BoxDecoration(
+                                  color: Colors.orange.shade200,
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child:
+                                      item.postImage != null &&
+                                          item.postImage!.isNotEmpty
+                                      ? Image.network(
+                                          item.postImage!,
+                                          fit: BoxFit.cover,
+                                          errorBuilder: (context, error, _) =>
+                                              const Icon(
+                                                Icons.broken_image,
+                                                size: 50,
+                                                color: Colors.grey,
+                                              ),
+                                        )
+                                      : const Center(
+                                          child: Icon(
+                                            Icons.image_not_supported,
+                                            size: 40,
+                                            color: Colors.grey,
+                                          ),
                                         ),
-                                      ),
+                                ),
                               ),
                             ),
                           ],

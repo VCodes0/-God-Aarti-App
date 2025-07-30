@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../main.dart';
 import '../../models/festival_model.dart';
+import '../../widgets/build options/build_options.dart';
 
 class ShowFestivalAartis extends StatefulWidget {
   final Data data;
@@ -35,6 +37,10 @@ class _ShowFestivalAartisState extends State<ShowFestivalAartis> {
       appBar: AppBar(
         automaticallyImplyLeading: true,
         title: Text(widget.data.name ?? 'Festival Aartis'),
+      ),
+      bottomNavigationBar: SizedBox(
+        width: mq.width,
+        child: Image.asset("assets/bottomimg.png"),
       ),
       body: Consumer<FestivalAartiListController>(
         builder: (context, controller, _) {
@@ -79,7 +85,56 @@ class _ShowFestivalAartisState extends State<ShowFestivalAartis> {
                           icon: const Icon(Icons.share),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => Center(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(20),
+                                    width: 300,
+                                    color: Colors.white,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        buildOption(
+                                          "assets/play.png",
+                                          "Play next",
+                                        ),
+                                        buildOption(
+                                          "assets/download.png",
+                                          "Download",
+                                        ),
+                                        buildOption(
+                                          "assets/ringtone.png",
+                                          "Set as ringtone",
+                                        ),
+                                        buildOption(
+                                          "assets/queue.png",
+                                          "Add to queue",
+                                        ),
+                                        buildOption(
+                                          "assets/share.png",
+                                          "Share",
+                                        ),
+                                        buildOption(
+                                          "assets/delete.png",
+                                          "Delete",
+                                        ),
+                                        const SizedBox(height: 10),
+                                        IconButton(
+                                          icon: const Icon(Icons.close),
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
                           icon: const Icon(Icons.more_vert),
                         ),
                       ],
