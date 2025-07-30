@@ -1,13 +1,12 @@
-import 'package:aarti_app/controller/festival_aarti_list_controller.dart';
-import 'package:aarti_app/views/music%20screen/festival_music.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../controller/festival_aarti_list_controller.dart';
 import '../../main.dart';
 import '../../models/festival_model.dart';
-import '../../widgets/build options/build_options.dart';
+import '../music screen/festival_music.dart';
 
 class ShowFestivalAartis extends StatefulWidget {
   final Data data;
@@ -45,15 +44,12 @@ class _ShowFestivalAartisState extends State<ShowFestivalAartis> {
       body: Consumer<FestivalAartiListController>(
         builder: (context, controller, _) {
           final aartiList = controller.festivalAartiList;
-
           if (controller.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
-
           if (aartiList.isEmpty) {
             return const Center(child: Text("No Aarti found."));
           }
-
           return Padding(
             padding: const EdgeInsets.all(8),
             child: ListView.builder(
@@ -91,44 +87,78 @@ class _ShowFestivalAartisState extends State<ShowFestivalAartis> {
                               builder: (context) => Center(
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(20),
-                                  child: Container(
-                                    padding: const EdgeInsets.all(20),
-                                    width: 300,
+                                  child: Material(
+                                    // <-- This is the fix!
                                     color: Colors.white,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        buildOption(
-                                          "assets/play.png",
-                                          "Play next",
+                                    child: Container(
+                                      padding: const EdgeInsets.all(20),
+                                      width: 300,
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                Get.to(
+                                                  () => MusicScreen3(
+                                                    data: Data(),
+                                                    imageUrl:
+                                                        item.mainImage ?? '',
+                                                    audioUrl: item.audio ?? '',
+                                                  ),
+                                                );
+                                              },
+                                              child: _buildOption(
+                                                "assets/play_aarti.png",
+                                                "Play Aarti",
+                                              ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {},
+                                              child: _buildOption(
+                                                "assets/download.png",
+                                                "Download",
+                                              ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {},
+                                              child: _buildOption(
+                                                "assets/ringtone.png",
+                                                "Set as ringtone",
+                                              ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {},
+                                              child: _buildOption(
+                                                "assets/add_quee.png",
+                                                "Add to queue",
+                                              ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () => shareAarti(
+                                                item.title ?? 'Untitled Aarti',
+                                              ),
+                                              child: _buildOption(
+                                                "assets/share2.png",
+                                                "Share",
+                                              ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {},
+                                              child: _buildOption(
+                                                "assets/delete.png",
+                                                "Delete",
+                                              ),
+                                            ),
+                                            const SizedBox(height: 10),
+                                            IconButton(
+                                              icon: const Icon(Icons.close),
+                                              onPressed: () =>
+                                                  Navigator.of(context).pop(),
+                                            ),
+                                          ],
                                         ),
-                                        buildOption(
-                                          "assets/download.png",
-                                          "Download",
-                                        ),
-                                        buildOption(
-                                          "assets/ringtone.png",
-                                          "Set as ringtone",
-                                        ),
-                                        buildOption(
-                                          "assets/queue.png",
-                                          "Add to queue",
-                                        ),
-                                        buildOption(
-                                          "assets/share.png",
-                                          "Share",
-                                        ),
-                                        buildOption(
-                                          "assets/delete.png",
-                                          "Delete",
-                                        ),
-                                        const SizedBox(height: 10),
-                                        IconButton(
-                                          icon: const Icon(Icons.close),
-                                          onPressed: () =>
-                                              Navigator.of(context).pop(),
-                                        ),
-                                      ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -145,6 +175,21 @@ class _ShowFestivalAartisState extends State<ShowFestivalAartis> {
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildOption(String imagePath, String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12.0),
+      child: InkWell(
+        child: Row(
+          children: [
+            Image.asset(imagePath, width: 24, height: 24),
+            const SizedBox(width: 10),
+            Text(text, style: const TextStyle(fontSize: 16)),
+          ],
+        ),
       ),
     );
   }
