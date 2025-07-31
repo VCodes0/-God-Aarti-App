@@ -105,6 +105,9 @@ class DownloadWallpaper extends StatelessWidget {
                         Get.snackbar(
                           'Success',
                           'Image saved successfully to gallery.',
+                          backgroundColor: CupertinoColors.activeGreen,
+                          colorText: CupertinoColors.white,
+                          snackPosition: SnackPosition.BOTTOM,
                         );
                       } else {
                         Get.snackbar('Error', 'Failed to save image.');
