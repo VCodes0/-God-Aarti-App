@@ -84,7 +84,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
           SizedBox(height: screen.height * 0.08),
           Center(
             child: InkWell(
-              onTap: () => Get.to(() => GetStartedScreen()),
+              onTap: () => Get.offAll(() => GetStartedScreen()),
               child: CustomNxtButton(text: "Continue"),
             ),
           ),
