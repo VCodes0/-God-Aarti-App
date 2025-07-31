@@ -35,7 +35,7 @@ class _ShowFestivalAartisState extends State<ShowFestivalAartis> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: Text(widget.data.name ?? 'Festival Aartis'),
+        title: Text(widget.data.name ?? 'Festival Artis'),
       ),
       bottomNavigationBar: SizedBox(
         width: mq.width,
