@@ -52,7 +52,7 @@ Widget buildPermissionTile(
         Switch(
           value: value,
           onChanged: onChanged,
-          activeColor: Colors.orange,
+          activeThumbColor: Colors.orange,
           inactiveThumbColor: Colors.grey,
         ),
       ],

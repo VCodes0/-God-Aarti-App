@@ -9,7 +9,6 @@ import '../../components/tofu3/tofu3.dart';
 import '../../main.dart';
 import '../../widgets/build drawer item/build_drawer_item.dart';
 import '../aarti/aarti_screen.dart';
-import '../downloads/downloads_screen.dart';
 import '../home/home_screen.dart';
 import '../wallpaper/wallpaper_screen.dart';
 
@@ -79,14 +78,7 @@ class GetStartedScreen extends StatelessWidget {
                   Get.to(() => WallpaperScreen());
                 },
               ),
-              buildDrawerItem(
-                icon: Icons.download,
-                text: 'Downloads',
-                onTap: () {
-                  Get.back();
-                  Get.to(() => DownloadsScreen());
-                },
-              ),
+
               Padding(
                 padding: const EdgeInsets.only(
                   left: 16.0,

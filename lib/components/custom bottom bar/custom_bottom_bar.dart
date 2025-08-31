@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../views/aarti/aarti_screen.dart';
-import '../../views/downloads/downloads_screen.dart';
 import '../../views/wallpaper/wallpaper_screen.dart';
 
 class CustomBottomBar extends StatefulWidget {
@@ -25,18 +24,9 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
       'selectedIcon': 'assets/inactive_wallpaper.png',
       'label': 'Wallpaper',
     },
-    {
-      'icon': 'assets/active_download.png',
-      'selectedIcon': 'assets/inactive_download.png',
-      'label': 'Downloads',
-    },
   ];
 
-  final List<Widget> screens = [
-    AartiScreen(),
-    WallpaperScreen(),
-    DownloadsScreen(),
-  ];
+  final List<Widget> screens = [AartiScreen(), WallpaperScreen()];
 
   @override
   Widget build(BuildContext context) {
